@@ -75,7 +75,7 @@ def ego_search(
 	segments: list[str],
 	embedding_model: str,
 	overlap: int = 4,
-	strictness: float = 0.5,
+	strictness: float = 0.65,
 ):
 	# Need overlap for individual words 
 	overlapping = make_overlapping(segments, overlap_by=overlap)
@@ -89,7 +89,7 @@ def ego_search(
 	# Get sims 
 	print("Compute similarities...")
 	sims = np.abs(np.dot(embeddings, text_embedding) / (np.linalg.norm(embeddings, axis=1) * np.linalg.norm(text_embedding)))
-	plt.plot(sims)
+	# plt.plot(sims)
 
 	# Re-expand into score curve (using rolling average)
 	scores = np.zeros(len(segments))
@@ -97,7 +97,7 @@ def ego_search(
 		for j in range(i, i + overlap):
 			scores[j] += sim
 	scores = scores / overlap
-	plt.plot(scores)
+	plt.plot(scores, label="score")
 
 	# plt.hlines(np.mean(scores), 0, len(segments))
 	# plt.hlines(np.percentile(scores, 75), 0, len(segments))
@@ -112,12 +112,14 @@ def ego_search(
 	ens = sts + rlen
 	print(sts)
 	print(ens)
-	plt.hlines(np.full(sts.shape, thres), sts, ens)
+	plt.hlines(np.full(sts.shape, thres), sts, ens, color="C2", label="regions")
 
 	# Score them (by highest value)
 	r_scores = np.array([s + np.argmax(scores[s:e]) for s, e in zip(sts, ens)])
-	plt.plot(r_scores, scores[r_scores], "x")
+	plt.plot(r_scores, scores[r_scores], "x", label="peak value")
 	r_scores = scores[r_scores]
+
+	plt.legend() 
 
 	# # Find peaks 
 	# peaks, _ = find_peaks(scores, height=0.0, width=0.0)

@@ -95,20 +95,18 @@ def to_sentences(text: str) -> list[str]:
 
 	sentences = []
 	lines = re.split(r"((?<=[!.?]\s)\n*)", text)
-	for i, line in enumerate(lines):
-		print(f"line '{line}'")
+	# for i, line in enumerate(lines):
+	# 	print(f"line '{line.replace("\n", "/n")}'")
 
-		# # if i < len(line)-1:
-		# # 	line = line + "\n"
-		# # sentences.append(line)
-		
-		# s = (re.split(r"([!?.] )", line))
-		# print("sends", s)
-		# for i in range(0, len(s)-1, 2):
-		# 	sentence = s[i] + s[i+1]
-		# 	sentences.append(sentence)
-
+	# exit(0)
 	return lines
+
+
+def to_words(line):
+	words = re.split(r"(\w+\s+)", line)
+	# for w in words:
+	# 	print(f"word '{w}'")
+	return [w for w in words if w != ""]
 
 
 # class Chunk(BaseModel):

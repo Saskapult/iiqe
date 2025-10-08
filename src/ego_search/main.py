@@ -5,7 +5,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 from .prompt import ego_search, format_results, format_segment_text, prompt
-from .chunk import make_segments_text
+from .chunk import make_segments_text, to_words
 from .extract import make_embeddings
 from .settings import Settings
 
@@ -74,11 +74,13 @@ def cli_prompt():
 	sts, ens, scrs = ego_search(args.prompt, dataset["facts"], dataset["embedding_model"])
 	r = format_results(sts, ens, scrs, dataset["facts"], dataset["tags"])
 	plt.show()
+	# plt.savefig("poster/first.png")
 	plt.clf()
 
 	print(f"Narrow on '{r[0]}'")
-	segments = r[0].split()
+	segments = to_words(r[0])
 	print("made", segments, f"({len(segments)})")
 	sts, ens, scrs = ego_search(args.prompt, segments, dataset["embedding_model"], 6)
 	format_results(sts, ens, scrs, segments, [])
 	plt.show()
+	# plt.savefig("poster/second.png")
