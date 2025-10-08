@@ -92,13 +92,7 @@ import regex as re
 def to_sentences(text: str) -> list[str]:
 	# Split but also keep the characters 
 	# apparently not very common! 
-
-	sentences = []
 	lines = re.split(r"((?<=[!.?]\s)\n*)", text)
-	# for i, line in enumerate(lines):
-	# 	print(f"line '{line.replace("\n", "/n")}'")
-
-	# exit(0)
 	return lines
 
 
@@ -107,11 +101,6 @@ def to_words(line):
 	# for w in words:
 	# 	print(f"word '{w}'")
 	return [w for w in words if w != ""]
-
-
-# class Chunk(BaseModel):
-# 	embedding: list[float]
-# 	contents: str
 
 
 def make_segments_text(text: str, tags: dict) -> list[tuple[str, dict]]:

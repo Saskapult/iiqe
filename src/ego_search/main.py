@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import matplotlib.pyplot as plt
 
-from .prompt import ego_search, format_results, format_segment_text, prompt
+from .search import ego_search, format_results, format_segment_text, prompt
 from .chunk import make_segments_text, to_words
 from .extract import make_embeddings
 from .settings import Settings
